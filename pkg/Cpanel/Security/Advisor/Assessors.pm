@@ -139,7 +139,7 @@ sub get_installed_rpms {
                     ||
 
                     ( $this_version eq $installed_version && Cpanel::Version::Compare::compare( $installed_release, '>', $this_release ) )
-                  ) {
+                ) {
                     next;
                 }
             }
@@ -158,9 +158,9 @@ sub get_running_kernel_type {
     my $redhat_release = Cpanel::LoadFile::loadfile('/etc/redhat-release');
     my $kernel_type =
         ( ( $kallsyms =~ /\[(kmod)?lve\]/ ) && ( $redhat_release =~ /CloudLinux/ ) ) ? 'cloudlinux'
-      : ( $kallsyms =~ /grsec/ )     ? 'grsec'
-      : ( -e '/etc/redhat-release' ) ? 'other'
-      :                                '';
+      : ( $kallsyms =~ /grsec/ )                                                     ? 'grsec'
+      : ( -e '/etc/redhat-release' )                                                 ? 'other'
+      :                                                                                '';
     return $kernel_type;
 }
 

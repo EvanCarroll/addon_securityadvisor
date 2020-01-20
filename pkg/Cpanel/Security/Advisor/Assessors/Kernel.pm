@@ -101,7 +101,7 @@ sub _suggest_kernelcare {
     my $kernelcare_state = Cpanel::KernelCare::get_kernelcare_state();
 
     my ( $promotion, $note );
-    
+
     # Alert that this IP has a valid KernelCare license, but the RPM is not
     # installed (offer link to install it), then bail out
     $promotion = $self->_lh->maketext('KernelCare provides an easy and effortless way to ensure that your operating system uses the most up-to-date kernel without the need to reboot your server.');
@@ -111,7 +111,7 @@ sub _suggest_kernelcare {
             'text'       => $self->_lh->maketext('Valid KernelCare License Found, but KernelCare is Not Installed.'),
             'suggestion' => $promotion . ' ' . $self->_lh->maketext(
                 '[output,url,_1,Click to install,_2,_3].',
-                $self->base_path(_get_script_number() . '/purchase_kernelcare_completion?order_status=success'),
+                $self->base_path( _get_script_number() . '/purchase_kernelcare_completion?order_status=success' ),
                 'target' => '_parent',
             ),
         );
@@ -141,7 +141,7 @@ sub _suggest_kernelcare {
         $note      = $self->_lh->maketext(q{NOTE: This is not the full KernelCare product and service.});
         my $link = $self->_lh->maketext(
             '[output,url,_1,Add KernelCare\'s Free Symlink Protection,_2,_3].',
-            $self->base_path(_get_script_number() . '/add_kernelcare_free_symlink_protection'),
+            $self->base_path( _get_script_number() . '/add_kernelcare_free_symlink_protection' ),
             'target' => '_parent',
         );
         $self->add_bad_advice(
@@ -182,7 +182,6 @@ sub _suggest_kernelcare {
         return;
     }
 
-
     # Offer KernelCare upgrade to a paid license if KernelCare is either not installed or if KernelCare is installed and just the free patch set is applied
     #TODO - successful purchase flow handler needs to be updated to look for KC RPM/free patch set and merely apply default patch set if kernelcare is already installed
     if ( !_has_kc_default_patch_set($kernelcare_state) ) {
@@ -206,14 +205,14 @@ sub _suggest_kernelcare {
             my $price = Whostmgr::KernelCare::get_kernelcare_product_price();
             $suggestion = $self->_lh->maketext(
                 '[output,url,_1,Get KernelCare,_2,_3][_4].',
-                $self->base_path(_get_script_number() . '/purchase_kernelcare_init'),
+                $self->base_path( _get_script_number() . '/purchase_kernelcare_init' ),
                 'target' => '_parent',
                 ($price) ? qq{ for \$$price/month} : q{},
             );
         }
 
         $suggestion = ($suggestion) ? '<p/><p/>' . $suggestion : '';
-        $promotion = $self->_lh->maketext('KernelCare provides an easy and effortless way to ensure that your operating system uses the most up-to-date kernel without the need to reboot your server.');
+        $promotion  = $self->_lh->maketext('KernelCare provides an easy and effortless way to ensure that your operating system uses the most up-to-date kernel without the need to reboot your server.');
 
         # Verifies the user is on CentOS 6 or 7, and is not running CloudLinux.
         if ( Cpanel::KernelCare::system_supports_kernelcare_free() ) {
